@@ -1,0 +1,21 @@
+.folders {
+  display: inline-block;
+  width: 30%;
+  height: 80vh;
+  border-right: 2px solid black;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.main {
+  display: inline-block;
+  text-align: center;
+  /*padding-top: 60px;*/
+  height: 100vh;
+}
+
+.main h1 {
+  font-size: 50px;
+  padding-top: 50px;
+  font-family: 'Source Code Pro', sans-serif;
+}
