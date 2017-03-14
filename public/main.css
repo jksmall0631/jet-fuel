@@ -20,3 +20,51 @@
   padding-top: 50px;
   font-family: 'Source Code Pro', sans-serif;
 }
+
+.folder-submit-btn, .url-submit-btn {
+  border: 1px solid black;
+  height: 30px;
+  width: 80px;
+  font-size: 15px;
+  color: black;
+  background-color: #e5e7e9;
+  border-radius: 5px;
+  font-family: 'Source Code Pro', sans-serif;
+}
+
+.folder-submit-btn:hover, .url-submit-btn:hover {
+  border: 1px solid white;
+  background-color: #96102f;
+  color: white;
+}
+
+.url-input, .folder-input {
+  height: 30px;
+  font-size: 15px;
+}
+
+.url-input {
+  width: 78%;
+  margin: 10px;
+}
+
+.folder-input {
+  width: 40%;
+}
+
+.date-filter-btn, .popular-filter-btn {
+  border: none;
+  font-family: 'Source Code Pro', sans-serif;
+  font-size: 20px;
+  background-color: white;
+}
+
+.date-filter-btn:hover, .popular-filter-btn:hover {
+  color: #96102f;
+  font-weight: bold;
+}
+
+p {
+  font-size: 20px;
+  font-family: 'Source Code Pro', sans-serif;
+}
