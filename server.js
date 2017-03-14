@@ -33,6 +33,16 @@ app.post('/api/folders', (req, res) => {
   res.json({ id, name });
 });
 
+app.get('/api/folders/:folder', (req, res) => {
+  const { folder } = req.params;
+  const filtered = app.locals.urls.filter(url => {
+    if(url.folder === folder){
+      return url;
+    }
+  })
+  res.json(filtered);
+})
+
 app.post('/api/folders/:folder', (req, res) => {
 const { folder } = req.params;
 const date = Date.now();

@@ -28,6 +28,15 @@ document.querySelector('.folder-submit-btn').addEventListener('click', () => {
   saveFolder(input);
 });
 
+document.querySelector('.url-submit-btn').addEventListener('click', () => {
+  let input = document.querySelector('.url-input').value;
+  let list = document.querySelector('.url-list');
+
+  list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${input}</button></li>`;
+
+  // saveUrl(input);
+});
+
 const saveFolder = (input) => {
   let url = 'http://localhost:3000/api/folders';
 
