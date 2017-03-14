@@ -20,9 +20,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/folders', (req, res) => {
-  const id = Date.now();
+  const name = req.body.name
+  const id = md5(name);
 
-  res.json({ id });
+  app.locals.folders.push({ id, name });
+
+  res.json({ id, name });
 });
 
 
