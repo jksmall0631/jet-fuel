@@ -19,7 +19,9 @@ app.get('/', (req, res) => {
   });
 });
 
-
+app.get('/api/folders', (req, res) => {
+  res.json(app.locals.folders);
+})
 
 app.post('/api/folders', (req, res) => {
   const name = req.body.name
