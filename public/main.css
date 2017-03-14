@@ -59,6 +59,12 @@ body {
   width: 40%;
 }
 
+.folder-list {
+  margin-top: 10px;
+  overflow: scroll;
+  height: 100%;
+}
+
 .date-filter-btn, .popular-filter-btn, .folder-btn {
   border: none;
   font-family: 'Source Code Pro', sans-serif;
