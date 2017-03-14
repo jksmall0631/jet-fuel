@@ -2,7 +2,7 @@
   display: inline-block;
   width: 30%;
   height: 80vh;
-  border-right: 2px solid black;
+  border-right: 2px solid lightGrey;
   margin-top: 50px;
   text-align: center;
 }
@@ -12,6 +12,7 @@
   text-align: center;
   /*padding-top: 60px;*/
   height: 100vh;
+  width: 68%;
 }
 
 .main h1 {
