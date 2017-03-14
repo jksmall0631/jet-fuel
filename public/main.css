@@ -1,9 +1,13 @@
+body {
+  display: flex;
+}
+
 .folders {
   display: inline-block;
   width: 30%;
   height: 80vh;
   border-right: 2px solid lightGrey;
-  margin-top: 50px;
+  margin-top: 60px;
   text-align: center;
 }
 
@@ -17,13 +21,14 @@
 
 .main h1 {
   font-size: 50px;
-  padding-top: 50px;
+  padding: 50px 0;
   font-family: 'Source Code Pro', sans-serif;
 }
 
 .folder-submit-btn, .url-submit-btn {
+  vertical-align: top;
   border: 1px solid black;
-  height: 30px;
+  height: 35px;
   width: 80px;
   font-size: 15px;
   color: black;
@@ -33,33 +38,36 @@
 }
 
 .folder-submit-btn:hover, .url-submit-btn:hover {
-  border: 1px solid white;
+  border: none;
   background-color: #96102f;
   color: white;
+  cursor: pointer;
 }
 
 .url-input, .folder-input {
   height: 30px;
   font-size: 15px;
+  border-radius: 5px;
 }
 
 .url-input {
   width: 78%;
-  margin: 10px;
+  margin-left: 10px;
 }
 
 .folder-input {
   width: 40%;
 }
 
-.date-filter-btn, .popular-filter-btn {
+.date-filter-btn, .popular-filter-btn, .all-folder {
   border: none;
   font-family: 'Source Code Pro', sans-serif;
   font-size: 20px;
   background-color: white;
+  margin-bottom: 10px;
 }
 
-.date-filter-btn:hover, .popular-filter-btn:hover {
+.date-filter-btn:hover, .popular-filter-btn:hover, .all-folder:hover {
   color: #96102f;
   font-weight: bold;
 }
