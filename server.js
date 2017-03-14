@@ -12,6 +12,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'jet fuel.';
 app.locals.folders = [];
+app.locals.urls = [];
 
 app.get('/', (req, res) => {
   fs.readFile(`${__dirname}/index.html`, (err, file) => {
@@ -31,6 +32,16 @@ app.post('/api/folders', (req, res) => {
 
   res.json({ id, name });
 });
+
+app.post('/api/folders/:folder', (req, res) => {
+const { folder } = req.params;
+const date = Date.now();
+const url = req.body.url;
+console.log(req.body)
+app.locals.folders.push({ date, url, folder })
+
+res.json({ date, url, folder })
+})
 
 
 // app.get('/folders', (req, res) => {
