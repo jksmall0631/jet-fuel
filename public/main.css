@@ -59,7 +59,7 @@ body {
   width: 40%;
 }
 
-.date-filter-btn, .popular-filter-btn, .all-folder {
+.date-filter-btn, .popular-filter-btn, .folder-btn {
   border: none;
   font-family: 'Source Code Pro', sans-serif;
   font-size: 20px;
@@ -67,7 +67,7 @@ body {
   margin-bottom: 10px;
 }
 
-.date-filter-btn:hover, .popular-filter-btn:hover, .all-folder:hover {
+.date-filter-btn:hover, .popular-filter-btn:hover, .folder-btn:hover {
   color: #96102f;
   font-weight: bold;
 }
