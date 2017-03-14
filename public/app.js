@@ -8,10 +8,16 @@ const loadDb = () => {
     },
   })
   .then(response => response.json())
-  .then(response => console.log(response));
+  .then(response => displayFolders(response));
 }
-
 loadDb();
+
+const displayFolders = (folderArray) => {
+  let list = document.querySelector('.folder-list');
+  folderArray.map(folder => {
+    return list.innerHTML = list.innerHTML + `<li><button class='folder-btn'>${folder.name}</button></li>`;
+  })
+}
 
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
   let input = document.querySelector('.folder-input').value;
