@@ -4,5 +4,21 @@ document.querySelector('.folder-submit-btn').addEventListener('click', () => {
 
   list.innerHTML = list.innerHTML + `<li><button class='folder-btn'>${input}</button></li>`;
 
-  
+  saveFolder(input);
 });
+
+function saveFolder(input){
+  let url = 'http://localhost:3000/api/folders';
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: input,
+    })
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
+}
