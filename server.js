@@ -47,8 +47,7 @@ app.post('/api/folders/:folder', (req, res) => {
 const { folder } = req.params;
 const date = Date.now();
 const url = req.body.url;
-console.log(req.body)
-app.locals.folders.push({ date, url, folder })
+app.locals.urls.push({ date, url, folder })
 
 res.json({ date, url, folder })
 })
