@@ -1,3 +1,5 @@
+let folderId;
+
 const loadDb = () => {
   let url = 'http://localhost:3000/api/folders';
 
@@ -15,8 +17,17 @@ loadDb();
 const displayFolders = (folderArray) => {
   let list = document.querySelector('.folder-list');
   folderArray.map(folder => {
-    return list.innerHTML = list.innerHTML + `<li><button class='folder-btn'>${folder.name}</button></li>`;
+    return list.innerHTML = list.innerHTML + `<li><button class='folder-btn' id=${folder.id}>${folder.name}</button></li>`;
   })
+}
+
+const displayUrls = (urlArray, folderId) => {
+  console.log(folderId)
+  let main = document.querySelector('.main');
+  urlArray.map(url => {
+    return main.innerHTML = main.innerHTML + `<li><a href='#' class='url-btn'>${url.name}</a></li>`;
+  })
+  console.log(urlArray);
 }
 
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
@@ -29,15 +40,14 @@ document.querySelector('.folder-submit-btn').addEventListener('click', () => {
 });
 
 document.querySelector('.folder-list').addEventListener('click', (e) => {
-  loadUrls(e.target.innerText);
+  folderId = e.target.id;
+  loadUrls(e.target.id);
   let main = document.querySelector('.main');
-
   main.innerHTML = main.innerHTML + `<h2>${e.target.innerText}</h2>`
 })
 
-const loadUrls = (urlName) => {
-  let url = 'http://localhost:3000/api/folders/' + urlName;
-  console.log(url);
+const loadUrls = (folderId) => {
+  let url = 'http://localhost:3000/api/folders/' + folderId;
   fetch(url, {
     method: 'GET',
     headers: {
@@ -45,16 +55,17 @@ const loadUrls = (urlName) => {
     },
   })
   .then(response => response.json())
-  .then(response => console.log(response));
+  .then(response => displayUrls(response, folderId));
 }
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
-  let input = document.querySelector('.url-input').value;
+  console.log('bla');
+  let urlInput = document.querySelector('.url-input').value;
   let list = document.querySelector('.url-list');
 
-  list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${input}</button></li>`;
+  list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${urlInput}</button></li>`;
 
-  saveUrl(input);
+  saveUrl(folderId, urlInput);
 });
 
 const saveFolder = (input) => {
@@ -73,19 +84,21 @@ const saveFolder = (input) => {
   .then(response => console.log(response))
 }
 
-const saveUrl = (input) => {
-  console.log(input);
-  let url = 'http://localhost:3000/api/folders';
+const saveUrl = (folderId, urlInput) => {
+  let input = document.querySelector('.url-input').value;
+  if(folderId){
+    let url = 'http://localhost:3000/api/folders' + folderId;
 
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: input,
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: url,
+      })
     })
-  })
-  .then(response => response.json())
-  .then(response => console.log(response))
+    .then(response => response.json())
+    .then(response => console.log(response))
+  }
 }

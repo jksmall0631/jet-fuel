@@ -29,27 +29,27 @@ app.post('/api/folders', (req, res) => {
   const id = md5(name);
 
   app.locals.folders.push({ id, name });
-
   res.json({ id, name });
 });
 
-app.get('/api/folders/:folder', (req, res) => {
-  const { folder } = req.params;
+app.get('/api/folders/:folderId', (req, res) => {
+  const { folderId } = req.params;
   const filtered = app.locals.urls.filter(url => {
-    if(url.folder === folder){
+    if(url.folder === folderId){
       return url;
     }
   })
   res.json(filtered);
 })
 
-app.post('/api/folders/:folder', (req, res) => {
-const { folder } = req.params;
+app.post('/api/folders/:folderId', (req, res) => {
+  console.log(req.params);
+const { folderId } = req.params;
 const date = Date.now();
 const url = req.body.url;
-app.locals.urls.push({ date, url, folder })
-
-res.json({ date, url, folder })
+app.locals.urls.push({ date, url, folderId })
+console.log(app.locals.urls)
+res.json({ date, url, folderId })
 })
 
 
