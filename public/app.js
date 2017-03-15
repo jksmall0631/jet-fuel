@@ -21,12 +21,12 @@ const displayFolders = (folderArray) => {
   })
 }
 
-const displayUrls = (urlArray, folderId) => {
+const displayUrls = (urlArray) => {
   let urlList = document.querySelector('.url-list');
+  urlList.innerHTML = '';
   urlArray.map(url => {
-    return urlList.innerHTML = urlList.innerHTML + `<li><a href='#' class='url-btn'>${url.id}</a></li>`;
+    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' target='_blank' class='url-btn'>${url.id}</a></li>`;
   })
-  console.log(urlArray);
 }
 
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
@@ -46,32 +46,33 @@ document.querySelector('.folder-list').addEventListener('click', (e) => {
 })
 
 const loadUrls = (folderId) => {
-  let url = 'http://localhost:3000/api/folders/' + folderId;
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-    },
-  })
-  .then(response => response.json())
-  .then((response) => {
-    displayUrls(response, folderId);
-  })
+  if(folderId){
+    let url = 'http://localhost:3000/api/folders/' + folderId;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then((response) => {
+      displayUrls(response);
+    })
+  }
 }
 
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
-  console.log('bla');
+
   let urlInput = document.querySelector('.url-input').value;
   let list = document.querySelector('.url-list');
 
-  // list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${urlInput}</button></li>`;
   saveUrl(folderId, urlInput);
   loadUrls(folderId);
 });
 
 const saveFolder = (input) => {
-  let url = 'http://localhost:3000/api/folders';
+  let url = 'http://localhost:3000/api/folders/';
 
   fetch(url, {
     method: 'POST',
@@ -97,7 +98,7 @@ const saveUrl = (folderId, urlInput) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        url: url,
+        url: urlInput,
       })
     })
     .then(response => response.json())

@@ -11,19 +11,20 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'jet fuel.';
+app.locals.id = 0;
 app.locals.folders = [
-  {
-   id: 1,
-   name: "Test"
-  }
+  // {
+  //  id: 1,
+  //  name: "Test"
+  // }
 ];
 app.locals.urls = [
-  {
-    id: 'abc',
-    url: 'www.google.com',
-    date: Date.now(),
-    folderId: 1
-  }
+  // {
+  //   id: 'abc',
+  //   url: 'www.google.com',
+  //   date: Date.now(),
+  //   folderId: 1
+  // }
 ];
 
 app.get('/', (req, res) => {
@@ -51,18 +52,16 @@ app.get('/api/folders/:folderId', (req, res) => {
       return url;
     }
   })
-  console.log(filtered)
   res.json(filtered);
 })
 
 app.post('/api/folders/:folderId', (req, res) => {
-  console.log(req.params);
-const { folderId } = req.params;
-const date = Date.now();
-const url = req.body.url;
-app.locals.urls.push({ date, url, folderId })
-console.log(app.locals.urls)
-res.json({ date, url, folderId })
+  const id = app.locals.id++;
+  const { folderId } = req.params;
+  const date = Date.now();
+  const url = req.body.url;
+  app.locals.urls.push({ date, url, folderId, id })
+  res.json({ date, url, folderId, id })
 })
 
 
