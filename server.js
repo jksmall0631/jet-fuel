@@ -11,8 +11,20 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'jet fuel.';
-app.locals.folders = [];
-app.locals.urls = [];
+app.locals.folders = [
+  {
+   id: 1,
+   name: "Test"
+  }
+];
+app.locals.urls = [
+  {
+    id: 'abc',
+    url: 'www.google.com',
+    date: Date.now(),
+    folderId: 1
+  }
+];
 
 app.get('/', (req, res) => {
   fs.readFile(`${__dirname}/index.html`, (err, file) => {
@@ -35,10 +47,11 @@ app.post('/api/folders', (req, res) => {
 app.get('/api/folders/:folderId', (req, res) => {
   const { folderId } = req.params;
   const filtered = app.locals.urls.filter(url => {
-    if(url.folder === folderId){
+    if(url.folderId == folderId){
       return url;
     }
   })
+  console.log(filtered)
   res.json(filtered);
 })
 

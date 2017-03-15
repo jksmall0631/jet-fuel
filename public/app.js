@@ -22,10 +22,9 @@ const displayFolders = (folderArray) => {
 }
 
 const displayUrls = (urlArray, folderId) => {
-  console.log(folderId)
-  let main = document.querySelector('.main');
+  let urlList = document.querySelector('.url-list');
   urlArray.map(url => {
-    return main.innerHTML = main.innerHTML + `<li><a href='#' class='url-btn'>${url.name}</a></li>`;
+    return urlList.innerHTML = urlList.innerHTML + `<li><a href='#' class='url-btn'>${url.id}</a></li>`;
   })
   console.log(urlArray);
 }
@@ -42,8 +41,8 @@ document.querySelector('.folder-submit-btn').addEventListener('click', () => {
 document.querySelector('.folder-list').addEventListener('click', (e) => {
   folderId = e.target.id;
   loadUrls(e.target.id);
-  let main = document.querySelector('.main');
-  main.innerHTML = main.innerHTML + `<h2>${e.target.innerText}</h2>`
+  // let main = document.querySelector('.main');
+  // main.innerHTML = main.innerHTML + `<h2>${e.target.innerText}</h2>`
 })
 
 const loadUrls = (folderId) => {
@@ -55,17 +54,20 @@ const loadUrls = (folderId) => {
     },
   })
   .then(response => response.json())
-  .then(response => displayUrls(response, folderId));
+  .then((response) => {
+    displayUrls(response, folderId);
+  })
 }
+
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
   console.log('bla');
   let urlInput = document.querySelector('.url-input').value;
   let list = document.querySelector('.url-list');
 
-  list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${urlInput}</button></li>`;
-
+  // list.innerHTML = list.innerHTML + `<li><button class='url-btn'>${urlInput}</button></li>`;
   saveUrl(folderId, urlInput);
+  loadUrls(folderId);
 });
 
 const saveFolder = (input) => {
@@ -87,7 +89,7 @@ const saveFolder = (input) => {
 const saveUrl = (folderId, urlInput) => {
   let input = document.querySelector('.url-input').value;
   if(folderId){
-    let url = 'http://localhost:3000/api/folders' + folderId;
+    let url = 'http://localhost:3000/api/folders/' + folderId;
 
     fetch(url, {
       method: 'POST',
