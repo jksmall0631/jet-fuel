@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const md5 = require('md5');
 
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -12,20 +16,8 @@ app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'jet fuel.';
 app.locals.id = 0;
-app.locals.folders = [
-  // {
-  //  id: 1,
-  //  name: "Test"
-  // }
-];
-app.locals.urls = [
-  // {
-  //   id: 'abc',
-  //   url: 'www.google.com',
-  //   date: Date.now(),
-  //   folderId: 1
-  // }
-];
+app.locals.folders = [];
+app.locals.urls = [];
 
 app.get('/', (req, res) => {
   fs.readFile(`${__dirname}/index.html`, (err, file) => {
@@ -34,36 +26,80 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/folders', (req, res) => {
-  res.json(app.locals.folders);
+  database('folders').select()
+          .then(urls => {
+            res.status(200).json(urls);
+          })
+          .catch(error => {
+            console.log(error);
+            console.error('somethings wrong with db')
+          });
 })
 
-app.post('/api/folders', (req, res) => {
-  const name = req.body.name
-  const id = md5(name);
+app.post('/api/folders/', (req, res) => {
+  const { name } = req.body
+  const folder = { name }
 
-  app.locals.folders.push({ id, name });
-  res.json({ id, name });
-});
+  database('folders').insert(folder)
+  .then(response => {
+    database('folders').select()
+      .then(folders => {
+        res.status(200).json(folders);
+      })
+      .catch(error => {
+        console.log(error);
+        console.error('somethings wrong with db');
+      })
+  })
+})
 
 app.get('/api/folders/:folderId', (req, res) => {
-  const { folderId } = req.params;
-  const filtered = app.locals.urls.filter(url => {
-    if(url.folderId == folderId){
-      return url;
-    }
+  database('urls').where('folder_id', req.params.folderId).select()
+    .then(urls => {
+      res.status(200).json(urls);
+    })
+    .catch(error => {
+      console.log(error);
+      console.error('somethings wrong with db');
+    })
+})
+
+app.post('/api/folders/', (req, res) => {
+  const { name } = req.body
+  const folder = { name }
+
+  database('folders').insert(folder)
+  .then(response => {
+    database('folders').select()
+      .then(folders => {
+        res.status(200).json(folders);
+      })
+      .catch(error => {
+        console.log(error);
+        console.error('somethings wrong with db');
+      })
   })
-  res.json(filtered);
 })
 
 app.post('/api/folders/:folderId', (req, res) => {
-  const id = app.locals.id++;
-  const { folderId } = req.params;
+  const folder_id = req.params.folderId;
   let date = new Date;
   const url = req.body.url;
-  app.locals.urls.push({ date, url, folderId, id })
-  res.json({ date, url, folderId, id })
-})
+  const new_url = {folder_id, date, url}
 
+  database('urls').insert(new_url)
+  .then(response => {
+    database('urls').where('folder_id', req.params.folderId).select()
+    .then(urls => {
+      console.log('success')
+      res.status(200).json(urls)
+    })
+    .catch(error => {
+      console.log(error);
+      console.error('somethings wrong with db');
+    })
+  })
+})
 
 // app.get('/folders', (req, res) => {
 //   {folder} = req.body;
