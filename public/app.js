@@ -8,7 +8,7 @@ const loadDb = () => {
     headers: {
       'content-type': 'application/json',
     },
-  });
+  })
   .then(response => response.json())
   .then(response => displayFolders(response));
 }
@@ -57,7 +57,7 @@ const loadUrls = (folderId, filter) => {
       headers: {
         'content-type': 'application/json',
       },
-    });
+    })
     .then(response => response.json())
     .then((response) => {
       if (filter == 'date'){
@@ -96,8 +96,8 @@ const saveFolder = (input) => {
     },
     body: JSON.stringify({
       name: input,
-    });
-  });
+    })
+  })
   .then(response => response.json())
   .then(response => displayFolders([response]))
 }
@@ -115,8 +115,8 @@ const saveUrl = (folderId, urlInput) => {
       },
       body: JSON.stringify({
         url: urlInput,
-      });
-    });
+      })
+    })
     .then(response => response.json())
     .then(response => console.log(response))
   }
