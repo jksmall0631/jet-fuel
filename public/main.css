@@ -65,20 +65,20 @@ body {
   height: 100%;
 }
 
-.date-filter-btn, .popular-filter-btn, .folder-btn {
+ .folder-btn, .newest-date-btn, .most-popular-btn, .oldest-date-btn, .least-popular-btn{
   border: none;
   font-family: 'Source Code Pro', sans-serif;
-  font-size: 20px;
+  font-size: 25px;
   background-color: white;
   margin-bottom: 10px;
 }
 
-.date-filter-btn:hover, .popular-filter-btn:hover, .folder-btn:hover {
+ .folder-btn:hover, .newest-date-btn:hover, .oldest-date-btn:hover, .most-popular-btn:hover, .least-popular-btn:hover {
   color: #96102f;
   font-weight: bold;
 }
 
 p {
-  font-size: 20px;
+  font-size: 30px;
   font-family: 'Source Code Pro', sans-serif;
 }
