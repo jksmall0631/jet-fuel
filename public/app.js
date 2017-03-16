@@ -8,7 +8,7 @@ const loadDb = () => {
     headers: {
       'content-type': 'application/json',
     },
-  });
+  })
   .then(response => response.json())
   .then(response => displayFolders(response));
 }
@@ -16,6 +16,7 @@ loadDb();
 
 const displayFolders = (folderArray) => {
   let list = document.querySelector('.folder-list');
+  list.innerHTML = '';
   folderArray.map(folder => {
     return list.innerHTML = list.innerHTML + `<li><button class='folder-btn' id=${folder.id}>${folder.name}</button></li>`;
   });
@@ -25,7 +26,6 @@ const displayUrls = (urlArray) => {
   let urlList = document.querySelector('.url-list');
   urlList.innerHTML = '';
   urlArray.map(url => {
-    console.log(url)
     return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p></li>`;
   });
 }
@@ -47,9 +47,6 @@ document.querySelector('.folder-list').addEventListener('click', (e) => {
 });
 
 const loadUrls = (folderId, filter) => {
-  console.log('#loadUrls');
-  console.log(folderId);
-  console.log('filter', filter);
   if(folderId){
     let url = 'http://localhost:3000/api/folders/' + folderId;
     fetch(url, {
@@ -57,7 +54,7 @@ const loadUrls = (folderId, filter) => {
       headers: {
         'content-type': 'application/json',
       },
-    });
+    })
     .then(response => response.json())
     .then((response) => {
       if (filter == 'date'){
@@ -96,10 +93,10 @@ const saveFolder = (input) => {
     },
     body: JSON.stringify({
       name: input,
-    });
-  });
+    })
+  })
   .then(response => response.json())
-  .then(response => displayFolders([response]))
+  .then(response => displayFolders(response))
 }
 
 const saveUrl = (folderId, urlInput) => {
@@ -115,10 +112,10 @@ const saveUrl = (folderId, urlInput) => {
       },
       body: JSON.stringify({
         url: urlInput,
-      });
-    });
+      })
+    })
     .then(response => response.json())
-    .then(response => console.log(response))
+    .then(response => displayUrls(response))
   }
 }
 
