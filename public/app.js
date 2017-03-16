@@ -8,7 +8,7 @@ const loadDb = () => {
     headers: {
       'content-type': 'application/json',
     },
-  })
+  });
   .then(response => response.json())
   .then(response => displayFolders(response));
 }
@@ -18,7 +18,7 @@ const displayFolders = (folderArray) => {
   let list = document.querySelector('.folder-list');
   folderArray.map(folder => {
     return list.innerHTML = list.innerHTML + `<li><button class='folder-btn' id=${folder.id}>${folder.name}</button></li>`;
-  })
+  });
 }
 
 const displayUrls = (urlArray) => {
@@ -26,8 +26,8 @@ const displayUrls = (urlArray) => {
   urlList.innerHTML = '';
   urlArray.map(url => {
     console.log(url)
-    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' target='_blank' class='url-btn'>${url.id}</a><p>${url.dateStr}</p></li>`;
-  })
+    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p></li>`;
+  });
 }
 
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
@@ -44,11 +44,12 @@ document.querySelector('.folder-list').addEventListener('click', (e) => {
   loadUrls(e.target.id);
   // let main = document.querySelector('.main');
   // main.innerHTML = main.innerHTML + `<h2>${e.target.innerText}</h2>`
-})
+});
 
-const loadUrls = (folderId) => {
-  console.log('load');
+const loadUrls = (folderId, filter) => {
+  console.log('#loadUrls');
   console.log(folderId);
+  console.log('filter', filter);
   if(folderId){
     let url = 'http://localhost:3000/api/folders/' + folderId;
     fetch(url, {
@@ -56,14 +57,26 @@ const loadUrls = (folderId) => {
       headers: {
         'content-type': 'application/json',
       },
-    })
+    });
     .then(response => response.json())
     .then((response) => {
+      if (filter == 'date'){
+        console.log('url array', response);
+        response = sortByDate(response)
+      } else if (filter == 'popularity') {
+        response = sortByPopularity(response)
+      }
       displayUrls(response);
-    })
+    });
   }
 }
 
+const sortByDate = (urls) => {
+  let sortedUrls = urls.sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime()
+  });
+  return sortedUrls;
+}
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
   let urlInput = document.querySelector('.url-input').value;
@@ -83,8 +96,8 @@ const saveFolder = (input) => {
     },
     body: JSON.stringify({
       name: input,
-    })
-  })
+    });
+  });
   .then(response => response.json())
   .then(response => displayFolders([response]))
 }
@@ -102,9 +115,13 @@ const saveUrl = (folderId, urlInput) => {
       },
       body: JSON.stringify({
         url: urlInput,
-      })
-    })
+      });
+    });
     .then(response => response.json())
     .then(response => console.log(response))
   }
 }
+
+document.querySelector('.date-filter-btn').addEventListener('click', (e) => {
+  loadUrls(folderId, 'date');
+});

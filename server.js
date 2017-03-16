@@ -59,10 +59,9 @@ app.post('/api/folders/:folderId', (req, res) => {
   const id = app.locals.id++;
   const { folderId } = req.params;
   let date = new Date;
-  var dateStr = (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes();
   const url = req.body.url;
-  app.locals.urls.push({ dateStr, url, folderId, id })
-  res.json({ dateStr, url, folderId, id })
+  app.locals.urls.push({ date, url, folderId, id })
+  res.json({ date, url, folderId, id })
 })
 
 
