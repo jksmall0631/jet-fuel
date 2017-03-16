@@ -11,8 +11,21 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'jet fuel.';
-app.locals.folders = [];
-app.locals.urls = [];
+app.locals.id = 0;
+app.locals.folders = [
+  // {
+  //  id: 1,
+  //  name: "Test"
+  // }
+];
+app.locals.urls = [
+  // {
+  //   id: 'abc',
+  //   url: 'www.google.com',
+  //   date: Date.now(),
+  //   folderId: 1
+  // }
+];
 
 app.get('/', (req, res) => {
   fs.readFile(`${__dirname}/index.html`, (err, file) => {
@@ -29,18 +42,27 @@ app.post('/api/folders', (req, res) => {
   const id = md5(name);
 
   app.locals.folders.push({ id, name });
-
   res.json({ id, name });
 });
 
-app.post('/api/folders/:folder', (req, res) => {
-const { folder } = req.params;
-const date = Date.now();
-const url = req.body.url;
-console.log(req.body)
-app.locals.folders.push({ date, url, folder })
+app.get('/api/folders/:folderId', (req, res) => {
+  const { folderId } = req.params;
+  const filtered = app.locals.urls.filter(url => {
+    if(url.folderId == folderId){
+      return url;
+    }
+  })
+  res.json(filtered);
+})
 
-res.json({ date, url, folder })
+app.post('/api/folders/:folderId', (req, res) => {
+  const id = app.locals.id++;
+  const { folderId } = req.params;
+  let date = new Date;
+  var dateStr = (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes();
+  const url = req.body.url;
+  app.locals.urls.push({ dateStr, url, folderId, id })
+  res.json({ dateStr, url, folderId, id })
 })
 
 
