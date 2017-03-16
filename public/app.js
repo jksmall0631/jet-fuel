@@ -21,11 +21,6 @@ const displayFolders = (folderArray) => {
   })
 }
 
-const displayFolder = (folder) => {
-  let list = document.querySelector('.folder-list');
-  list.innerHTML = list.innerHTML + `<li><button class='folder-btn' id=${folder.id}>${folder.name}</button></li>`;
-}
-
 const displayUrls = (urlArray) => {
   let urlList = document.querySelector('.url-list');
   urlList.innerHTML = '';
@@ -38,8 +33,6 @@ const displayUrls = (urlArray) => {
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
   let input = document.querySelector('.folder-input').value;
   let list = document.querySelector('.folder-list');
-
-  // list.innerHTML = list.innerHTML + `<li><button class='folder-btn'>${input}</button></li>`;
 
   saveFolder(input);
 });
@@ -93,7 +86,7 @@ const saveFolder = (input) => {
     })
   })
   .then(response => response.json())
-  .then(response => displayFolder(response))
+  .then(response => displayFolders([response]))
 }
 
 const saveUrl = (folderId, urlInput) => {
