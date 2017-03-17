@@ -25,9 +25,11 @@ const displayFolders = (folderArray) => {
 const displayUrls = (urlArray) => {
   let urlList = document.querySelector('.url-list');
   urlList.innerHTML = '';
-  urlArray.map(url => {
-    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p></li>`;
-  })
+  if(urlArray.length){
+    urlArray.map(url => {
+    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' id=${url.folder_id} folderId=${url.folder_id} target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p><p>${url.clicks}</p></li>`;
+    })
+  }
 }
 
 document.querySelector('.folder-submit-btn').addEventListener('click', () => {
@@ -39,12 +41,29 @@ document.querySelector('.folder-submit-btn').addEventListener('click', () => {
 
 document.querySelector('.folder-list').addEventListener('click', (e) => {
   folderId = e.target.id;
-  // console.log(e.target);
-  // console.log(folderId);
   loadUrls(e.target.id);
-  // let main = document.querySelector('.main');
-  // main.innerHTML = main.innerHTML + `<h2>${e.target.innerText}</h2>`
 })
+
+document.querySelector('.url-list').addEventListener('click', (e) => {
+  console.log(e.target.innerText);
+  let url = 'http://localhost:3000/api/folders/' + e.target.innerText;
+
+  fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      folderId: e.target.id,
+    })
+  })
+  .then(response => response.json())
+  .then(response => displayUrls(response))
+})
+
+// document.querySelector('.url-list').addEventListener('click', (e) => {
+//   console.log(e.target);
+// })
 
 const loadUrls = (folderId, filter) => {
   if(folderId){
@@ -105,7 +124,6 @@ const saveFolder = (input) => {
 }
 
 const saveUrl = (folderId, urlInput) => {
-  // console.log('save')
   let input = document.querySelector('.url-input').value;
   if(folderId){
     let url = 'http://localhost:3000/api/folders/' + folderId;
@@ -129,6 +147,5 @@ document.querySelector('.newest-date-btn').addEventListener('click', (e) => {
 })
 
 document.querySelector('.oldest-date-btn').addEventListener('click', (e) => {
-  console.log('click')
   loadUrls(folderId, 'oldest');
 })

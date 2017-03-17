@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
             table.increments('id').primary();
             table.string('date');
             table.string('url');
+            table.integer('clicks');
             table.integer('folder_id')
                  .references('id')
                  .inTable('folders');
