@@ -103,22 +103,33 @@ app.post('/api/folders/:folderId', (req, res) => {
 })
 
 app.patch('/api/folders/:urlId', (req, res) => {
-  database('urls').where('id', req.params.urlId).select()
-  .then(urls => {
-    urls.map(url => {
-      database('urls').update({'clicks': url.clicks + 1}).where('id', req.params.urlId)
-      .then(response => {
-        database('urls').where('folder_id', req.body.folderId).select()
-          .then(urls => {
-            res.status(200).json(urls);
-          })
-        })
-      .catch(error => {
-        console.log(error);
-        console.error('somethings wrong with db');
-      })
+  database('urls').increment('clicks', 1).where('id', req.params.urlId)
+  .then(response => {
+    database('urls').where('folder_id', req.body.folderId).select()
+    .then(urls => {
+      res.status(200).json(urls);
+    })
+    .catch(error => {
+      console.log(error);
+      console.error('somethings wrong with db');
     })
   })
+  // database('urls').where('id', req.params.urlId).select()
+  // .then(urls => {
+  //   urls.map(url => {
+  //     database('urls').update({'clicks': url.clicks + 1}).where('id', req.params.urlId)
+  //     .then(response => {
+  //       database('urls').where('folder_id', req.body.folderId).select()
+  //         .then(urls => {
+  //           res.status(200).json(urls);
+  //         })
+  //       })
+  //     .catch(error => {
+  //       console.log(error);
+  //       console.error('somethings wrong with db');
+  //     })
+  //   })
+  // })
 })
 
 // app.get('/folders', (req, res) => {

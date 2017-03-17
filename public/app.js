@@ -27,7 +27,7 @@ const displayUrls = (urlArray) => {
   urlList.innerHTML = '';
   if(urlArray.length){
     urlArray.map(url => {
-    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' id=${url.id} target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p><p>${url.clicks}</p></li>`;
+    return urlList.innerHTML = urlList.innerHTML + `<li><a href='http://${url.url}' id=${url.folder_id} folderId=${url.folder_id} target='_blank' class='url-btn'>${url.id}</a><p>${url.date}</p><p>${url.clicks}</p></li>`;
     })
   }
 }
@@ -45,8 +45,8 @@ document.querySelector('.folder-list').addEventListener('click', (e) => {
 })
 
 document.querySelector('.url-list').addEventListener('click', (e) => {
-  console.log(e.target.id);
-  let url = 'http://localhost:3000/api/folders/' + e.target.id;
+  console.log(e.target.innerText);
+  let url = 'http://localhost:3000/api/folders/' + e.target.innerText;
 
   fetch(url, {
     method: 'PATCH',
