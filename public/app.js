@@ -1,7 +1,7 @@
 let folderId;
 
 const loadDb = () => {
-  let url = 'http://localhost:3000/api/folders';
+  let url = '/api/folders';
 
   fetch(url, {
     method: 'GET',
@@ -46,7 +46,7 @@ document.querySelector('.folder-list').addEventListener('click', (e) => {
 
 document.querySelector('.url-list').addEventListener('click', (e) => {
   console.log(e.target.innerText);
-  let url = 'http://localhost:3000/api/folders/' + e.target.innerText;
+  let url = '/api/folders/' + e.target.innerText;
 
   fetch(url, {
     method: 'PATCH',
@@ -63,7 +63,7 @@ document.querySelector('.url-list').addEventListener('click', (e) => {
 
 const loadUrls = (folderId, filter) => {
   if(folderId){
-    let url = 'http://localhost:3000/api/folders/' + folderId;
+    let url = '/api/folders/' + folderId;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -116,7 +116,7 @@ document.querySelector('.url-submit-btn').addEventListener('click', () => {
 })
 
 const saveFolder = (input) => {
-  let url = 'http://localhost:3000/api/folders/';
+  let url = '/api/folders/';
 
   fetch(url, {
     method: 'POST',
@@ -134,7 +134,7 @@ const saveFolder = (input) => {
 const saveUrl = (folderId, urlInput) => {
   let input = document.querySelector('.url-input').value;
   if(folderId){
-    let url = 'http://localhost:3000/api/folders/' + folderId;
+    let url = '/api/folders/' + folderId;
 
     fetch(url, {
       method: 'POST',
