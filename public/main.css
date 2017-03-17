@@ -55,6 +55,11 @@ body {
   margin-left: 10px;
 }
 
+.url-list {
+  height: 300px;
+  overflow: scroll;
+}
+
 .folder-input {
   width: 40%;
 }
@@ -79,6 +84,30 @@ body {
 }
 
 p {
-  font-size: 30px;
+  font-size: 20px;
   font-family: 'Source Code Pro', sans-serif;
+  display: inline-block;
+}
+
+.name {
+  float: left;
+  margin-left: 40px;
+}
+
+.pop {
+  float: left;
+  margin-left: 20px;
+}
+
+.url-list li {
+  margin: 15px;
+}
+
+.url-list a {
+  font-size: 25px;
+  margin: 10px;
+}
+
+.url-list p {
+  margin: 10px;
 }

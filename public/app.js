@@ -61,10 +61,6 @@ document.querySelector('.url-list').addEventListener('click', (e) => {
   .then(response => displayUrls(response))
 })
 
-// document.querySelector('.url-list').addEventListener('click', (e) => {
-//   console.log(e.target);
-// })
-
 const loadUrls = (folderId, filter) => {
   if(folderId){
     let url = 'http://localhost:3000/api/folders/' + folderId;
@@ -81,7 +77,9 @@ const loadUrls = (folderId, filter) => {
       }else if (filter == 'oldest'){
         response = sortByDate(response, filter)
       } else if (filter == 'mostPopular') {
-        response = sortByPopularity(response)
+        response = sortByPopularity(response, filter)
+      } else if (filter == 'leastPopular') {
+        response = sortByPopularity(response, filter)
       }
       displayUrls(response)
     })
@@ -91,16 +89,22 @@ const loadUrls = (folderId, filter) => {
 const sortByDate = (urls, filter) => {
   let sortedUrls = urls.sort((a, b) => {
     if(filter == 'newest') {
-      return new Date(a.date).getTime() - new Date(b.date).getTime()
-    } else {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
+    } else {
+      return new Date(a.date).getTime() - new Date(b.date).getTime()
     }
   })
   return sortedUrls;
 }
 
 const sortByPopularity = (urls, filter) => {
-
+ let sortedUrls = urls.sort((a, b) => {
+   if(filter == 'mostPopular') {
+     return b.clicks - a.clicks
+   } else {
+     return a.clicks - b.clicks    }
+ })
+ return sortedUrls;
 }
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
@@ -154,6 +158,10 @@ document.querySelector('.oldest-date-btn').addEventListener('click', (e) => {
   loadUrls(folderId, 'oldest');
 })
 
-document.querySelector('most-popular-btn').addEventListener('click', (e) => {
-  loadUrls(folderId, 'mostPopular');
+document.querySelector('.most-popular-btn').addEventListener('click', (e) => {
+ loadUrls(folderId, 'mostPopular');
+})
+
+document.querySelector('.least-popular-btn').addEventListener('click', (e) => {
+ loadUrls(folderId, 'leastPopular');
 })
