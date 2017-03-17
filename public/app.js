@@ -80,8 +80,10 @@ const loadUrls = (folderId, filter) => {
         response = sortByDate(response, filter)
       }else if (filter == 'oldest'){
         response = sortByDate(response, filter)
-      } else if (filter == 'popularity') {
-        response = sortByPopularity(response)
+      } else if (filter == 'mostPopular') {
+        response = sortByPopularity(response, filter)
+      } else if (filter == 'leastPopular') {
+        response = sortByPopularity(response, filter)
       }
       displayUrls(response)
     })
@@ -97,6 +99,16 @@ const sortByDate = (urls, filter) => {
     }
   })
   return sortedUrls;
+}
+
+const sortByPopularity = (urls, filter) => {
+ let sortedUrls = urls.sort((a, b) => {
+   if(filter == 'mostPopular') {
+     return b.clicks - a.clicks
+   } else {
+     return a.clicks - b.clicks    }
+ })
+ return sortedUrls;
 }
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
@@ -148,4 +160,12 @@ document.querySelector('.newest-date-btn').addEventListener('click', (e) => {
 
 document.querySelector('.oldest-date-btn').addEventListener('click', (e) => {
   loadUrls(folderId, 'oldest');
+})
+
+document.querySelector('.most-popular-btn').addEventListener('click', (e) => {
+ loadUrls(folderId, 'mostPopular');
+})
+
+document.querySelector('.least-popular-btn').addEventListener('click', (e) => {
+ loadUrls(folderId, 'leastPopular');
 })
