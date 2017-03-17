@@ -4,15 +4,23 @@
   "description": "jet-fuel",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test":"node_modules/.bin/mocha ./tests/**.js || true",
+    "lint": "node_modules/.bin/eslint public/**.js lib/**.js tests/**.js **.js || true",
+    "lintf": "node_modules/.bin/eslint public/**.js lib/**.js tests/**.js **.js  --fix || true"
   },
   "author": "Joshua Small and Lauren Pesce",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
     "knex": "^0.12.8",
     "md5": "^2.2.1",
     "pg": "^6.1.4"
+
   }
 }

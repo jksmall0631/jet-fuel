@@ -61,10 +61,6 @@ document.querySelector('.url-list').addEventListener('click', (e) => {
   .then(response => displayUrls(response))
 })
 
-// document.querySelector('.url-list').addEventListener('click', (e) => {
-//   console.log(e.target);
-// })
-
 const loadUrls = (folderId, filter) => {
   if(folderId){
     let url = 'http://localhost:3000/api/folders/' + folderId;
