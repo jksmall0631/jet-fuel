@@ -98,3 +98,16 @@ p {
   float: left;
   margin-left: 20px;
 }
+
+.url-list li {
+  margin: 15px;
+}
+
+.url-list a {
+  font-size: 25px;
+  margin: 10px;
+}
+
+.url-list p {
+  margin: 10px;
+}

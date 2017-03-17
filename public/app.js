@@ -93,9 +93,9 @@ const loadUrls = (folderId, filter) => {
 const sortByDate = (urls, filter) => {
   let sortedUrls = urls.sort((a, b) => {
     if(filter == 'newest') {
-      return new Date(a.date).getTime() - new Date(b.date).getTime()
-    } else {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
+    } else {
+      return new Date(a.date).getTime() - new Date(b.date).getTime()
     }
   })
   return sortedUrls;
