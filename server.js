@@ -39,6 +39,7 @@ app.get('/api/folders', (req, res) => {
 
 app.post('/api/folders', (req, res) => {
   const name = req.body.name
+  console.log('name', name);
   const id = md5(name);
 
   app.locals.folders.push({ id, name });
@@ -74,3 +75,5 @@ app.post('/api/folders/:folderId', (req, res) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 })
+
+module.exports = app

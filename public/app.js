@@ -63,7 +63,7 @@ const loadUrls = (folderId, filter) => {
         response = sortByDate(response, filter)
       }else if (filter == 'oldest'){
         response = sortByDate(response, filter)
-      } else if (filter == 'popularity') {
+      } else if (filter == 'mostPopular') {
         response = sortByPopularity(response)
       }
       displayUrls(response)
@@ -80,6 +80,10 @@ const sortByDate = (urls, filter) => {
     }
   })
   return sortedUrls;
+}
+
+const sortByPopularity = (urls, filter) => {
+
 }
 
 document.querySelector('.url-submit-btn').addEventListener('click', () => {
@@ -131,6 +135,9 @@ document.querySelector('.newest-date-btn').addEventListener('click', (e) => {
 })
 
 document.querySelector('.oldest-date-btn').addEventListener('click', (e) => {
-  console.log('click')
   loadUrls(folderId, 'oldest');
+})
+
+document.querySelector('most-popular-btn').addEventListener('click', (e) => {
+  loadUrls(folderId, 'mostPopular');
 })
