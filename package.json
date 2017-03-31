@@ -4,7 +4,7 @@
   "description": "jet-fuel",
   "main": "index.js",
   "scripts": {
-    "test":"node_modules/.bin/mocha ./tests/**.js || true",
+    "test": "node_modules/.bin/mocha ./tests/**.js || true",
     "lint": "node_modules/.bin/eslint public/**.js lib/**.js tests/**.js **.js || true",
     "lintf": "node_modules/.bin/eslint public/**.js lib/**.js tests/**.js **.js  --fix || true"
   },
@@ -20,6 +20,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "eslint": "^3.18.0",
     "mocha": "^3.2.0"
   }
 }
